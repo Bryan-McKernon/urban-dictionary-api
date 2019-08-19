@@ -1,0 +1,16 @@
+
+<div id="main"></div>
+
+<script>
+const Http = new XMLHttpRequest();
+const term = "lol";
+const url='https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=' + term;
+Http.open("GET", url);
+Http.setRequestHeader("X-RapidAPI-Key", "f5b13fbecdmsh4d39ea459e16f58p10d3dajsnfb1a431ba454");
+Http.send();
+
+Http.onreadystatechange = (e) => {
+  console.log(Http.responseText);
+  document.getElementById("main").innerHTML = Http.responseText;  
+}
+</script>

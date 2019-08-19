@@ -1,0 +1,80 @@
+import React, {useState, useEffect} from 'react';
+import './App.css';
+import WordCard from './WordCard.js';
+
+function App() {
+
+
+// state
+const [httpStatus, sethttpStatus] = useState();
+const [definitionState, setDefinitionState] = useState();
+const [searchInput, setsearchInput] = useState();
+
+  
+
+
+useEffect(() => {   
+
+  const http = new XMLHttpRequest();
+  let term = "lol";
+  let url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + term;
+  http.open("GET", url);
+  http.setRequestHeader("X-RapidAPI-Key", "f5b13fbecdmsh4d39ea459e16f58p10d3dajsnfb1a431ba454");
+  http.send();
+  
+  
+  let request;
+  let JSON_Obj;
+  
+  http.onreadystatechange = (e) => {    
+    //check for error codes before passing value
+      request = http.responseText;
+      JSON_Obj = JSON.parse(request);
+  } 
+  
+  let definition = [];
+  
+  http.onload = () => {
+   if (http.status === 200) {
+      //array for each attribute
+      let example, thumbs_up, thumbs_down, author, written_on;
+      let i;
+      for (i=0; i<JSON_Obj.list.length; i++) {
+        definition.push(JSON_Obj.list[i]["definition"]);      
+      }
+      //definition = ["a", "b", "c"];     
+      //setDefinitionState(definition);  
+   } else {
+     console.log("too many requests");
+     //definition = ["a", "b", "c"];     
+   }
+  }
+  
+  http.onloadend = () => {
+    sethttpStatus(true);  
+    setDefinitionState(definition);
+  }
+  
+//must include [] to end of useEffect hook to ensure code only fires once initially and then not again as to prevent infinite loop
+}, []); 
+
+
+const searchAction = () => {
+   //setDefinitionState(definition);
+   //setsearchInput(searchInput);
+   console.log(definitionState);
+}
+
+
+return (
+  <div className="App">
+    <WordCard show={httpStatus} number={[1,2]}/>
+    <input></input>
+    <button onClick={searchAction}>Search</button>
+  </div>
+ );
+
+
+}
+
+export default App;
