@@ -1,0 +1,33 @@
+.cardContainer {
+    height: 250px;
+    width: 450px;
+    margin: 0 0 10px 0;
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: red;
+}
+
+.definition {
+
+}
+
+.example {
+
+}
+
+.likes {
+
+}
+
+.dislikes {
+
+}
+
+.author {
+
+}
+
+.datesubmitted {
+
+}

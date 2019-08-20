@@ -8,72 +8,93 @@ function App() {
 //--------------------------------------------------------------------------------------
 const [searchInput, setsearchInput] = useState();
 const [CardsInflated, setCardsInflated] = useState(false);
+const [Cards, setCards] = useState();
 //--------------------------------------------------------------------------------------
 
-/*
-// Prototye inheritance
-function x (y) {
-  this.a = "Lol";
+class Card  {
+  constructor(Definition, Example, Likes, Dislikes, Author, DateSubmitted) {
+    this.Definition = Definition;
+    this.Example = Example;
+    this.Likes = Likes;
+    this.Dislikes = Dislikes;
+    this.Author = Author;
+    this.DateSubmitted = DateSubmitted;
+  }
 }
-x.prototype.b = "ye";
-const q = new x;
-console.log(q.b);
-*/
+
+const inputTextChangeEvent = (event) => {
+  setsearchInput(event.target.value);
+}
 
 /*
-  const inputTextChangeEvent = (event) => {
-    setsearchInput(event.target.value);
+  - create HTTP con
+  - on SearchEvent 
+    - get user input
+    - pass user input to url
+    - if 200 proceed
+  - loop thru and construct Card obj from json data and add Card obj to array Cards
+  - use array Cards to pass value to component via props
+  */
+  
+  const SearchEvent = async () => {
+  const response = await
+   fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${searchInput}`, {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': 'f5b13fbecdmsh4d39ea459e16f58p10d3dajsnfb1a431ba454'
+      }
+  });
+
+  if (response.ok) {
+    const json = await response.json();
+    let CardsArray = [];
+    let i;
+    for (i=0; i<Object.keys(json["list"]).length; i++) {
+      CardsArray.push(new Card(
+          json["list"][i]["definition"],    
+          json["list"][i]["example"],
+          json["list"][i]["thumbs_up"],
+          json["list"][i]["thumbs_down"],
+          json["list"][i]["author"],
+          json["list"][i]["written_on"]
+        ));
+      }
+      setCards(CardsArray);
+      setCardsInflated(true);       
+    } else {
+      console.log("Connection Failed");
+    } 
   }
 
-  const data = [];
-  let cards = null;
-
-  const SearchEvent = () => {   
-    if (searchInput != null) {
-      const data = [];
-      const http = new XMLHttpRequest();
-      let url = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + searchInput;
-      http.open("GET", url);
-      http.setRequestHeader("X-RapidAPI-Key", "f5b13fbecdmsh4d39ea459e16f58p10d3dajsnfb1a431ba454");
-      http.send();    
-      http.onload = () => {
-        let request = JSON.parse(http.responseText);
-        if (http.status === 200) {
-          for (let i=0; i<request.list.length; i++) {
-            data.push(request.list[i]);
-          }
-          //console.log(array[0]["author"]);      
-          console.log(data);
-          setCardsInflated(true);
-        }  else {
-          console.log("connection fail :(");
-        }  
-      }
-
-      http.onloadend = () => {
-          cards = (
-            <div>
-              Yo
-              {data}
-            </div>
-            /*
-              [1,2,3].map(x => 2 * x)
-              [ 2, 4, 6 ]
-            *//*
-          );
-        }
-    }
-  }*/
-
-
-  
-  
+  let AllCards = null;
+  if (CardsInflated) { 
+    console.log(Cards[0]["Definition"]);
+    AllCards = (
+      <div>
+        {Cards.map((card, index) => {
+          return ( 
+            <WordCard
+             Definition = {Cards[index]["Definition"]}
+             Example = {Cards[index]["Example"]}
+             Likes = {Cards[index]["Likes"]}
+             Dislikes = {Cards[index]["Dislikes"]}
+             Author = {Cards[index]["Author"]}
+             DateSubmitted = {Cards[index]["DateSubmitted"]}            
+            />
+          )
+        })}
+      </div>
+    )
+  }
 
   return (
     <div className="App">
-      <input onChange={inputTextChangeEvent}></input>
-      <button onClick={SearchEvent}>Search</button>
-      {CardsInflated === true ?  cards : null}  
+      <header>Welcome to my Urban Dictionary<hr/></header>
+      <div className="Search_Container">
+        <input className="SearchInput" onChange={inputTextChangeEvent}></input>
+        <button className="SearchButton" onClick={SearchEvent}>Search</button>
+      </div>
+      {AllCards}  
     </div>
   );
 
