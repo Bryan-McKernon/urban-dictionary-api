@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import WordCard from './WordCard.js';
+import Loading from './Loading.js';
+import WordNotFound from './WordNotFound.js';
 
 function App() {
 
@@ -8,7 +10,7 @@ function App() {
 //--------------------------------------------------------------------------------------
 const [searchInput, setsearchInput] = useState();
 const [CardsInflated, setCardsInflated] = useState(null);
-const [WordNotFound, setWordNotFound] = useState();
+const [WordNotFoundBoolean, setWordNotFoundBoolean] = useState();
 const [Cards, setCards] = useState();
 //--------------------------------------------------------------------------------------
 
@@ -39,7 +41,7 @@ const inputTextChangeEvent = (event) => {
 
   const SearchEvent = async () => {
   setCardsInflated(false);
-  setWordNotFound(false);
+  setWordNotFoundBoolean(false);
   const response = await
    fetch(`https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=${searchInput}`, {
     method: 'GET',
@@ -66,12 +68,12 @@ const inputTextChangeEvent = (event) => {
             setCards(CardsArray);
             setCardsInflated(true);
         } else {          
-          setWordNotFound(true);
+          setWordNotFoundBoolean(true);
           setCardsInflated(null);
         }
     } else {
       console.log("Connection Failed");
-    } 
+    }
   }
 
 /*
@@ -88,12 +90,9 @@ const inputTextChangeEvent = (event) => {
   let AllCards = null;  
   let loading = null;  
 
-  if (WordNotFound) {
-    // this needs to be a component
-    wnf = (
-      <div>
-        <div>Word Not Found</div>
-      </div>
+  if (WordNotFoundBoolean) {
+    wnf = (      
+      <WordNotFound/>
     )
   }
 
@@ -116,11 +115,8 @@ const inputTextChangeEvent = (event) => {
       </div>
     )
   } else if (CardsInflated === false) {
-    // this needs to be a component
     loading = (
-      <div>
-        <div>Loading...</div>          
-      </div>
+      <Loading/>      
     )
   }
 
@@ -128,12 +124,12 @@ const inputTextChangeEvent = (event) => {
     <div className="App">
       <header>Welcome to my Urban Dictionary<hr/></header>
       <div className="Search_Container">
-        <input className="SearchInput" onChange={inputTextChangeEvent}></input>
+        <input autoFocus className="SearchInput" onChange={inputTextChangeEvent}></input>
         <button className="SearchButton" onClick={SearchEvent}>Search</button>
       </div>
-      {wnf}
+      {AllCards}
       {loading}
-      {AllCards}  
+      {wnf}
     </div>
   );
 

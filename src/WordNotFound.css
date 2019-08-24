@@ -1,0 +1,13 @@
+.WNFContainer {
+   position: relative;   
+   text-align: center;
+   margin: 45px 0 0 0;
+}
+
+.WNFText {
+    font-size: 26px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(80, 80, 80);
+}

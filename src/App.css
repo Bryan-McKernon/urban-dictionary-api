@@ -1,54 +1,108 @@
 html {
     /*rgb(19, 5, 5)*/
     background-color: lightblue;
-    height: 100%;
-}
-
-header {
-    font-size: 32px;
-    color: white;
-    font-style: italic;
-    left: 50%;
-    top: 85px;
-    transform: translate(-50%);
-    position: absolute;
-}
-
-.Search_Container {
-    left: 50%;
-    top: 165px;
-    transform: translate(-50%);
-    position: absolute; 
-}
-
-.SearchInput {
-   font-size: 22px;
-   border-style: solid;
-   border-radius: 12px;
-   border-width: 0px;   
-   margin: 0 15px 0 0;
-   padding: 4.5px 0 4.5px 13px;
-   outline: none;
-}
-
-.SearchButton {
-    font-size: 22px;
-    border-style: solid;
-    border-radius: 12px;
-    border-width: 1px;
-    border-color: rgb(190, 190, 190);
-    background-color: white;
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 6px 12px 6px 12px;
-    outline: none;
 }
 
 .SearchButton:focus {
     background-color: rgb(171, 221, 171);
+    color: black;
 }
 
 .SearchButton:hover {
     background-color: rgb(171, 221, 171);
+    color: black;
 }
 
+@media only screen and (max-width: 854px) {    
+    header {
+        font-size: 22px;
+        color: white;
+        font-style: bold;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        top: 35px;
+        position: relative;
+        text-align: center;
+        width: 80%;
+        margin: 0 0 0 10%;
+    }
+
+    .Search_Container {
+        position: relative; 
+        text-align: center;
+        width: 92%;
+        margin: 50px 0 0 4%;
+    }
+
+    .SearchInput {
+        font-size: 22px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: rgb(36, 36, 36);
+        border-style: solid;
+        border-radius: 12px;
+        border-width: 0px;   
+        padding: .5px 0 .5px 12px;
+        outline: none;
+        width: 60%;
+        margin: 0 5% 0 0;
+    }
+
+    .SearchButton {
+        font-size: 22px;
+        border-style: solid;
+        border-radius: 12px;
+        border-width: 0px;
+        border-color: rgb(190, 190, 190);
+        padding: 0;
+        background-color: white;
+        color: rgb(92, 92, 92);
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        outline: none;
+        width: 30%;
+    }
+}
+
+@media only screen and (min-width: 855px) {
+    header {
+        font-size: 32px;
+        color: white;
+        font-style: bold;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        top: 85px;
+        position: relative;
+        width: 50%;
+        margin: 0 0 0 25%;
+        text-align: center;
+    }
+
+    .Search_Container {
+        position: relative; 
+        width: 50%;
+        margin: 120px 0 0 25%;
+        text-align: center;
+    }
+
+    .SearchInput {
+        font-size: 22px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: rgb(36, 36, 36);
+        border-style: solid;
+        border-radius: 12px;
+        border-width: 0px;   
+        margin: 0 15px 0 0;
+        padding: 4.5px 0 4.5px 13px;
+        outline: none;
+    }
+
+    .SearchButton {
+        font-size: 22px;
+        border-style: solid;
+        border-radius: 12px;
+        border-width: 1px;
+        border-color: rgb(190, 190, 190);
+        background-color: white;
+        color: rgb(92, 92, 92);
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        padding: 6px 12px 6px 12px;
+        outline: none;
+    }
+}
